@@ -5,65 +5,66 @@ import ProjectSlideshow from "@/../components/ProjectSlideshow";
 
 export const dynamic = "force-static";
 
-// ✅ Generate all project slugs at build time
 export async function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
 }
 
-// ✅ Project detail page (static)
 export default async function ProjectPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const project = getProject(slug);
 
-  const p = getProject(slug);
-  if (!p) {
+  if (!project) {
     return (
-      <main className="py-12 text-center">
+      <div className="page-shell py-12 text-center">
         <p>Project not found.</p>
-        <Link href="/projects" className="underline hover:opacity-80">
+        <Link href="/projects" className="underline transition hover:opacity-80">
           ← Back to projects
         </Link>
-      </main>
+      </div>
     );
   }
 
-  const gallery = getGalleryForSlug(p.slug);
+  const gallery = getGalleryForSlug(project.slug);
 
   return (
-    <main className="bg-white py-0 md:py-0">
-      {/* 🔹 Slideshow section */}
-      <div className="relative w-full flex justify-center mb-10">
-        <div className="w-[96vw] md:w-[94vw] lg:w-[92vw] bg-white">
-          <ProjectSlideshow
-            images={gallery}
-            alt={p.title}
-            fit="contain"
-            height="h-[80vh] md:h-[85vh]"
-            sizes="(min-width: 1600px) 92vw, (min-width: 1200px) 94vw, (min-width: 768px) 96vw, 100vw"
-            controls
-          />
-        </div>
+    <div className="py-8 md:py-10">
+      <div className="mx-auto mb-10 w-[96vw] bg-white md:w-[94vw] lg:w-[92vw]">
+        <ProjectSlideshow
+          images={gallery}
+          alt={project.title}
+          fit="contain"
+          height="h-[80vh] md:h-[85vh]"
+          sizes="(min-width: 1600px) 92vw, (min-width: 1200px) 94vw, (min-width: 768px) 96vw, 100vw"
+          controls
+        />
       </div>
 
-      {/* 🔹 Project info */}
-      <article className="container mx-auto px-4 md:px-6 max-w-5xl mt-10">
-        <header className="pb-6 md:pb-8 text-center">
-          <h1 className="text-2xl md:text-4xl font-semibold">{p.title}</h1>
-          <p className="text-sm md:text-base text-zinc-600 mt-2">
-            {p.location} · {p.year}
-            {p.categories?.length ? ` · ${p.categories.join(", ")}` : ""}
+      <article className="page-shell max-w-5xl">
+        <header className="border-b border-zinc-200 pb-6 text-center md:pb-8">
+          <p className="micro-label">project</p>
+          <h1 className="mt-2 text-2xl font-bold lowercase md:text-4xl">
+            {project.title}
+          </h1>
+          <p className="mt-3 text-xs uppercase tracking-[0.12em] text-zinc-500">
+            {project.location} / {project.year}
           </p>
+          {!!project.categories?.length && (
+            <p className="mt-3 text-xs uppercase tracking-[0.12em] text-zinc-500">
+              {project.categories.join(" / ")}
+            </p>
+          )}
         </header>
 
         <div className="pt-6 text-center">
-          <Link href="/projects" className="text-sm underline hover:opacity-80 transition">
+          <Link href="/projects" className="text-sm underline transition hover:opacity-80">
             ← All projects
           </Link>
         </div>
       </article>
-    </main>
+    </div>
   );
 }

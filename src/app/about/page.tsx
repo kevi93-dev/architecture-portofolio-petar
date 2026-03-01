@@ -1,141 +1,130 @@
-'use client';
-import React from "react";
+"use client";
+
 import { motion } from "framer-motion";
-import { Building2, Ruler, Palette, Award, Mail, MapPin } from "lucide-react";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 const fadeIn = {
-  hidden: { opacity: 0, y: 8 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
 };
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-white text-zinc-900">
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeIn}
-            className="grid grid-cols-1 gap-10 md:grid-cols-3"
-          >
-            <div className="md:col-span-2">
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-600">
-                I’m an architect based in Austria, exploring the intersection of architecture, landscape, and social context. My work reflects a curiosity for spaces that balance precision with atmosphere — from healthcare and education to housing and urban design.
-              </p>
+    <div className="page-shell py-12 md:py-16">
+      <section className="page-header border-b border-zinc-200 pb-8 md:pb-10">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={fadeIn}
+          className="grid grid-cols-1 gap-10 md:grid-cols-3"
+        >
+          <div className="md:col-span-2">
+            <p className="micro-label">studio</p>
+            <h1 className="page-title mt-2 lowercase">about</h1>
+            <p className="page-subtitle">
+              I am an architect based in Austria, exploring the intersection of
+              architecture, landscape, and social context. My work balances
+              precision with atmosphere, from healthcare and education to
+              housing and urban design.
+            </p>
+            <p className="mt-6 text-sm uppercase tracking-[0.1em] text-zinc-500">
+              healthcare / education / housing / urban design
+            </p>
+          </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <Badge variant="secondary" className="rounded-full">Healthcare</Badge>
-                <Badge variant="secondary" className="rounded-full">Education</Badge>
-                <Badge variant="secondary" className="rounded-full">Housing</Badge>
-                <Badge variant="secondary" className="rounded-full">Urban Design</Badge>
-              </div>
+          <div className="relative">
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-zinc-200">
+              <Image
+                src="/projects/villa-h/VH1.jpg"
+                alt="Architectural studio visual"
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 33vw, 100vw"
+              />
             </div>
-
-            <div className="relative">
-              <div className="aspect-[4/5] w-full overflow-hidden rounded-3xl shadow-lg ring-1 ring-zinc-100">
-                <img
-                  src="/images/portrait.jpg"
-                  alt="Portrait"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
 
-      {/* Key values */}
-      <section className="mx-auto max-w-6xl px-6 py-6">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <section className="py-10">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {[
             {
-              icon: <Building2 className="h-6 w-6" />, title: "Context-first", desc:
-                "Each project grows from its site, climate, and community — not from a fixed style.",
+              title: "Context-first",
+              desc: "Each project grows from site, climate, and community rather than a fixed style.",
             },
             {
-              icon: <Ruler className="h-6 w-6" />, title: "Clarity & function", desc:
-                "Plans that work beautifully in daily use, with legible circulation and daylight.",
+              title: "Clarity and function",
+              desc: "Plans are optimized for daily life with legible circulation and quality daylight.",
             },
             {
-              icon: <Palette className="h-6 w-6" />, title: "Warm minimalism", desc:
-                "Honest materials, calm color, and crafted details — inviting rather than austere.",
+              title: "Warm minimalism",
+              desc: "Honest materials and calm palettes create spaces that feel precise and welcoming.",
             },
-          ].map((item, i) => (
-            <Card key={i} className="rounded-3xl">
-              <CardHeader>
-                <div className="flex items-center gap-3 text-zinc-700">
-                  {item.icon}
-                  <h3 className="text-lg font-medium">{item.title}</h3>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-zinc-600">{item.desc}</p>
-              </CardContent>
-            </Card>
+          ].map((item) => (
+            <article key={item.title} className="border-t border-zinc-200 pt-4">
+              <h2 className="text-base font-bold">{item.title}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-600">{item.desc}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Background */}
-      <section className="mx-auto max-w-6xl px-6 py-10">
-        <Card className="rounded-3xl">
-          <CardHeader>
-            <div className="flex items-center gap-2 text-zinc-700">
-              <Award className="h-5 w-5" />
-              <h3 className="text-lg font-medium">Background</h3>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ol className="relative ml-1 border-l border-zinc-200 pl-6">
-              {[
-                { year: "2025—now", text: "Independent architect focusing on healthcare and housing." },
-                { year: "2022—2025", text: "Project architect for large-scale educational and healthcare projects." },
-                { year: "2018—2022", text: "Participation in national and international competitions." },
-                { year: "2014—2018", text: "Studies in architecture and urban design." },
-              ].map((item, i) => (
-                <li key={i} className="mb-6">
-                  <div className="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full bg-zinc-900" />
-                  <p className="text-sm font-medium text-zinc-900">{item.year}</p>
-                  <p className="text-zinc-600">{item.text}</p>
-                </li>
-              ))}
-            </ol>
-          </CardContent>
-        </Card>
+      <section className="border-y border-zinc-200 py-10">
+        <h2 className="micro-label">background</h2>
+        <ol className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+          {[
+            {
+              year: "2025-present",
+              text: "Independent architect focusing on healthcare and housing.",
+            },
+            {
+              year: "2022-2025",
+              text: "Project architect for large-scale educational and healthcare projects.",
+            },
+            {
+              year: "2018-2022",
+              text: "Participation in national and international competitions.",
+            },
+            {
+              year: "2014-2018",
+              text: "Studies in architecture and urban design.",
+            },
+          ].map((item) => (
+            <li key={item.year} className="border-t border-zinc-200 pt-4">
+              <p className="text-xs uppercase tracking-[0.12em] text-zinc-500">
+                {item.year}
+              </p>
+              <p className="mt-2 text-sm text-zinc-700">{item.text}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
-      {/* Contact */}
-      <section className="mx-auto max-w-6xl px-6 pb-20">
-        <Card className="rounded-3xl">
-          <CardContent className="flex flex-col items-start gap-6 p-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h3 className="text-2xl font-semibold">Get in touch</h3>
-              <p className="mt-2 max-w-2xl text-zinc-600">
-                Feel free to connect via social media or email.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-4 text-zinc-700">
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  <a href="mailto:studio@example.com">studio@example.com</a>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>Vienna, Austria</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">Instagram</a>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <section className="py-10">
+        <h2 className="micro-label">contact</h2>
+        <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 text-sm text-zinc-700">
+          <a href="mailto:petar.stano@gmail.com" className="underline-offset-4 hover:underline">
+            petar.stano@gmail.com
+          </a>
+          <span>Vienna, Austria</span>
+          <a
+            href="https://www.linkedin.com/in/petarstanojevic/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline-offset-4 hover:underline"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://www.instagram.com/petarstanojevic.work/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline-offset-4 hover:underline"
+          >
+            Instagram
+          </a>
+        </div>
       </section>
     </div>
   );

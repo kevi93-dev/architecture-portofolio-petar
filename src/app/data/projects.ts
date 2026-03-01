@@ -1,11 +1,9 @@
-//Data and Types
-
 export type Category =
   | "housing"
   | "houses"
   | "public buildings"
   | "competitions"
-  | "urban planning"; 
+  | "urban planning";
 
 export const ALL_CATEGORIES: Category[] = [
   "housing",
@@ -20,8 +18,8 @@ export type Project = {
   location: string;
   year: number;
   slug: string;
-  image?: string;            // optional for now—only mountain-house has a file
-  categories?: Category[];   // optional on detail/home; required in filter page
+  image?: string;
+  categories?: Category[];
 };
 
 export const PROJECTS: Project[] = [
@@ -51,7 +49,7 @@ export const PROJECTS: Project[] = [
   },
   {
     title: "villa h",
-    location: "sankt pölten",
+    location: "sankt poelten",
     year: 2024,
     slug: "villa-h",
     image: "/projects/villa-h/VH_Main.png",
@@ -145,7 +143,7 @@ export const PROJECTS: Project[] = [
     image: "/projects/senior-residence-r/SR_Main.png",
     categories: ["housing"],
   },
-    {
+  {
     title: "casa f",
     location: "durres",
     year: 2025,
@@ -155,7 +153,6 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-// helper
 export function getProject(slug: string) {
-  return PROJECTS.find(p => p.slug === slug);
+  return PROJECTS.find((p) => p.slug === slug);
 }

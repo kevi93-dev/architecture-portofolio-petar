@@ -1,30 +1,37 @@
 export default function ImpressumPage() {
   return (
-    <main className="px-6 py-12 max-w-3xl">
-      <h1 className="text-3xl font-semibold mb-6">Impressum</h1>
+    <div className="page-shell max-w-3xl py-12 md:py-16">
+      <p className="micro-label">legal</p>
+      <h1 className="page-title mt-2 mb-8 lowercase">impressum</h1>
 
-      <p><strong>Website Owner:</strong></p>
-      <p>Petar Stanojevic</p>
-      <p>Vienna, Austria</p>
-      <p>
-        Email:{" "}
-        <a href="mailto:petar.stano@gmail.com" className="underline">
-          petar.stano@gmail.com
-        </a>
-      </p>
+      <div className="space-y-4 text-sm leading-relaxed text-zinc-700">
+        <p>
+          <strong>Website owner:</strong>
+          <br />
+          Petar Stanojevic
+          <br />
+          Vienna, Austria
+        </p>
 
-      <p className="mt-4">
-        This website is a personal architecture portfolio created to present academic and
-        professional projects. It is non-commercial and serves only to showcase design work.
-      </p>
+        <p>
+          Email:{" "}
+          <a href="mailto:petar.stano@gmail.com" className="underline">
+            petar.stano@gmail.com
+          </a>
+        </p>
 
-      <p className="mt-4">
-        Responsible for content according to §25 MedienG: Petar Stanojevic
-      </p>
+        <p>
+          This website is a personal architecture portfolio created to present
+          academic and professional projects. It is non-commercial and serves
+          only to showcase design work.
+        </p>
 
-      <p className="mt-8 text-sm opacity-80">
-        © {new Date().getFullYear()} All rights reserved.
-      </p>
-    </main>
+        <p>Responsible for content according to Section 25 MedienG: Petar Stanojevic</p>
+
+        <p className="pt-4 text-xs uppercase tracking-[0.12em] text-zinc-500">
+          Copyright {new Date().getFullYear()} All rights reserved
+        </p>
+      </div>
+    </div>
   );
 }

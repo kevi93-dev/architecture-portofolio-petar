@@ -36,7 +36,6 @@ export default function ProjectSlideshow({
   const [i, setI] = useState(0);
   const timerRef = useRef<number | null>(null);
 
-  // --- auto mode: read natural sizes
   const [dims, setDims] = useState<Record<number, { w: number; h: number }>>({});
   const ar = useMemo(() => {
     const d = dims[i];
@@ -53,7 +52,6 @@ export default function ProjectSlideshow({
     });
   }, [fit, images]);
 
-  // --- autoplay
   const clearTimer = () => {
     if (timerRef.current) {
       window.clearInterval(timerRef.current);
@@ -79,7 +77,15 @@ export default function ProjectSlideshow({
     [images.length]
   );
 
-  // --- touch swipe handlers
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") prev();
+      if (event.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [next, prev]);
+
   const touchStartX = useRef<number | null>(null);
   const touchDeltaX = useRef(0);
   const SWIPE_THRESHOLD = 50;
@@ -105,22 +111,18 @@ export default function ProjectSlideshow({
 
   if (!images?.length) return null;
 
-  const frameClass =
-    fit === "auto"
-      ? "relative w-full"
-      : `relative w-full ${height}`;
+  const frameClass = fit === "auto" ? "relative w-full" : `relative w-full ${height}`;
   const frameStyle: CSSProperties | undefined =
     fit === "auto" ? ({ aspectRatio: ar } as CSSProperties) : undefined;
 
   return (
     <div
-      className={`${frameClass} overflow-hidden group bg-neutral-100`}
+      className={`${frameClass} group overflow-hidden bg-neutral-100`}
       style={frameStyle}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Slides */}
       {images.map((src, idx) => {
         const focalPos = focal[src] || "";
         const active = idx === i;
@@ -149,26 +151,25 @@ export default function ProjectSlideshow({
         );
       })}
 
-      {/* Controls */}
       {controls && images.length > 1 && (
         <>
           <button
             type="button"
             onClick={prev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-black/40 text-white text-sm rounded-full opacity-0 group-hover:opacity-100 transition"
+            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/40 px-3 py-1.5 text-sm text-white opacity-0 transition group-hover:opacity-100"
             aria-label="Previous image"
           >
-            ←
+            Prev
           </button>
           <button
             type="button"
             onClick={next}
-            className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-black/40 text-white text-sm rounded-full opacity-0 group-hover:opacity-100 transition"
+            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/40 px-3 py-1.5 text-sm text-white opacity-0 transition group-hover:opacity-100"
             aria-label="Next image"
           >
-            →
+            Next
           </button>
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-white/90 bg-black/40 px-2 py-1 rounded">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded bg-black/40 px-2 py-1 text-xs text-white/90">
             {i + 1} / {images.length}
           </div>
         </>

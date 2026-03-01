@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen antialiased">
         <Nav />
-        <main className="px-6 pb-16">{children}</main>
+        <main className="pb-16">{children}</main>
         <Footer />
       </body>
     </html>
